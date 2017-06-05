@@ -110,17 +110,17 @@ function completedToggle(){
       idToSend: $(this).siblings('.delete').val()
     };//end completedButton
     console.log(completedToSend);
-    
+
     $.ajax({
       type: 'POST',
       url: '/updateCompletionFalse',
       data: completedToSend,
       success: function(response){
         console.log('rat noises', response);
-      }
-    });//end completedToggle
-  };
-};
+      }//end success
+    });//end ajax
+  };//end else
+};//end completedToggle
 
 
 

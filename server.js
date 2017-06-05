@@ -65,9 +65,8 @@ app.get('/getTask', function(req, res){
       tableData.on('end', function(){
         done();
         res.send(sendBackData);
-      })
+      })//end tableData
     };//end else
-
   })//end connect
 })//end get
 
@@ -90,7 +89,7 @@ app.post('/deleteFromDatabase', function(req, res){
 });//end post
 
 app.post('/updateCompletionTrue', function(req, res){
-  console.log('/updateCompletion hit', req.body);
+  console.log('/updateCompletionTrue hit', req.body);
 
   var id = req.body.idToSend;
   pool.connect(function(err, connection, done){
@@ -104,11 +103,11 @@ app.post('/updateCompletionTrue', function(req, res){
       done();
     }
   });//end connect
-  res.send('cool');
+  res.send('true');
 });//end post
 
 app.post('/updateCompletionFalse', function(req, res){
-  console.log('/updateCompletion hit', req.body);
+  console.log('/updateCompletionFalse hit', req.body);
 
   var id = req.body.idToSend;
   pool.connect(function(err, connection, done){
@@ -122,7 +121,7 @@ app.post('/updateCompletionFalse', function(req, res){
       done();
     }
   });//end connect
-  res.send('cool');
+  res.send('false');
 });//end post
 
 
