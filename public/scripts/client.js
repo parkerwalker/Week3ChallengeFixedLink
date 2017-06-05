@@ -6,7 +6,9 @@ function onReady(){
   $('#enter').on('click', sendTask);
   $('#update').on('click', updateTask);
   $('#table').on('click', '.delete', deleteTask);
-  $('#table').on('click', '.doneOrNot', completedToggle);
+  $('#table').on('click', '.done', completedToggle);
+  $('#table').on('click', '.notDone', completedToggle);
+
   updateTask();
 }
 
@@ -28,7 +30,6 @@ function sendTask(){
         updateTask();
         $('#input').val('');
         $('#tableDone').empty();
-        $('#tableNotDone').empty();
       }//end success
     });//end ajax
   };//end else
@@ -49,20 +50,17 @@ function updateTask() {
 function displayReturn(data){
   console.log('This is the data to be displayed: ', data);
   $('#tableDone').empty();
-  $('#tableNotDone').empty();
   console.log('update button click');
 
 
-
-
   for (var i = 0; i < data.length; i++) {
-    var isDone = '<input type="checkbox" class="doneOrNot" value= true checked></input><button class="delete" value=' + data[i].user_id + '>Delete</button></div';
-    var notDone = '<input type="checkbox" class="doneOrNot" value= false ></input><button class="delete" value=' + data[i].user_id + '>Delete</button></div';
+    var isDone = '<input type="checkbox" class="done" value= true checked></input><button class="delete" value=' + data[i].user_id + '>Delete</button></div';
+    var notDone = '<input type="checkbox" class="notDone" value= false ></input><button class="delete" value=' + data[i].user_id + '>Delete</button></div';
 
     if (data[i].completed === true){
       $('#tableDone').append('<div class="listItem2">' + data[i].task  + isDone)
     } else{
-      $('#tableNotDone').append('<div class="listItem">' + data[i].task  + notDone)
+      $('#tableDone').prepend('<div class="listItem">' + data[i].task  + notDone)
     }
   };//end loop
 }; //end displayreturn
@@ -97,7 +95,7 @@ function completedToggle(){
 
     $.ajax({
       type: 'POST',
-      url: '/updateCompletion',
+      url: '/updateCompletionTrue',
       data: completedToSend,
       success: function(response){
         console.log('rat noises', response);
@@ -106,10 +104,23 @@ function completedToggle(){
     });//end ajax
   } else {
     $input.parent().removeClass('listItem2');
+    console.log('completedToggle click');
+    var completedToSend = {
+      doneYet: $(this).val(),
+      idToSend: $(this).siblings('.delete').val()
+    };//end completedButton
+    console.log(completedToSend);
+    
+    $.ajax({
+      type: 'POST',
+      url: '/updateCompletionFalse',
+      data: completedToSend,
+      success: function(response){
+        console.log('rat noises', response);
+      }
+    });//end completedToggle
+  };
 };
-};//end completedToggle
-
-
 
 
 

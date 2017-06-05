@@ -89,7 +89,7 @@ app.post('/deleteFromDatabase', function(req, res){
   res.send('cool');
 });//end post
 
-app.post('/updateCompletion', function(req, res){
+app.post('/updateCompletionTrue', function(req, res){
   console.log('/updateCompletion hit', req.body);
 
   var id = req.body.idToSend;
@@ -107,6 +107,23 @@ app.post('/updateCompletion', function(req, res){
   res.send('cool');
 });//end post
 
+app.post('/updateCompletionFalse', function(req, res){
+  console.log('/updateCompletion hit', req.body);
+
+  var id = req.body.idToSend;
+  pool.connect(function(err, connection, done){
+    if(err){
+      console.log('error:', err);
+      done();
+      res.send(400);
+    } else {
+      console.log('updated completed ');
+      connection.query("UPDATE task_table set completed = false WHERE user_id = " + id);
+      done();
+    }
+  });//end connect
+  res.send('cool');
+});//end post
 
 
 
