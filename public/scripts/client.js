@@ -54,8 +54,9 @@ function displayReturn(data){
 
 
   for (var i = 0; i < data.length; i++) {
-    var isDone = '<input type="checkbox" class="done" value= true checked></input><button class="delete" value=' + data[i].user_id + '>Delete</button></div';
-    var notDone = '<input type="checkbox" class="notDone" value= false ></input><button class="delete" value=' + data[i].user_id + '>Delete</button></div';
+    var buttonDeleteUserid = '<button class="delete" value=' + data[i].user_id + '>Delete</button>';
+    var isDone = '<input type="checkbox" class="done" value= true checked></input>' + buttonDeleteUserid;
+    var notDone = '<input type="checkbox" class="notDone" value= false ></input>' + buttonDeleteUserid;
 
     if (data[i].completed === true){
       $('#tableDone').append('<div class="listItem2">' + data[i].task  + isDone)
@@ -99,6 +100,7 @@ function completedToggle(){
       data: completedToSend,
       success: function(response){
         console.log('rat noises', response);
+        updateTask();
 
       }//end success
     });//end ajax
@@ -117,6 +119,7 @@ function completedToggle(){
       data: completedToSend,
       success: function(response){
         console.log('rat noises', response);
+        updateTask();
       }//end success
     });//end ajax
   };//end else
