@@ -7,6 +7,7 @@ function onReady(){
   $('#update').on('click', updateTask);
   $('#table').on('click', '.delete', deleteTask);
   $('#table').on('click', '.doneOrNot', completedToggle);
+  updateTask();
 }
 
 function sendTask(){
@@ -39,7 +40,6 @@ function updateTask() {
     url: '/getTask',
     success: function(response){
       console.log('bark', response);
-
       displayReturn(response);
     }//end success
   });//end ajax//end else
@@ -47,12 +47,12 @@ function updateTask() {
 
 function displayReturn(data){
   console.log('This is the data to be displayed: ', data);
-  $('#table'). empty();
+  $('#table').empty();
 
   for (var i = 0; i < data.length; i++) {
-
     var isDone = '<input type="checkbox" class="doneOrNot" value= true ></input><button class="delete" value=' + data[i].user_id + '>Delete</button></div';
     var notDone = '<input type="checkbox" class="doneOrNot" value= false ></input><button class="delete" value=' + data[i].user_id + '>Delete</button></div';
+
     if (data[i].completed === true){
       $('#table').append('<div class="listItem">' + data[i].task + ' <span class="line">Its all done</span> ' + isDone)
     } else{
@@ -62,8 +62,7 @@ function displayReturn(data){
 }; //end displayreturn
 
 function deleteTask(){
-  console.log('delete button click');
-  console.log($(this).val());
+  console.log('delete button click', $(this).val());
   var idToDelete = {
     idToSend: $(this).val()
   };
@@ -80,6 +79,13 @@ function deleteTask(){
 };//end deleteTask
 
 function completedToggle(){
+  var $input = $(this);
+  if ($input.is(':checked')){
+    $input.parent().addClass('complete');
+
+  } else {
+    $input.parent().removeClass('complete');
+
   console.log('completedToggle click');
   var completedToSend = {
     doneYet: $(this).val(),
@@ -96,8 +102,7 @@ function completedToggle(){
       $(this).siblings('.line').text('Its all done');
     }//end success
   });//end ajax
-  $(this).parent().css('background-color', 'green')
-
+};
 };//end completedToggle
 
 

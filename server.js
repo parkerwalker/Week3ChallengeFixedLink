@@ -99,7 +99,7 @@ app.post('/updateCompletion', function(req, res){
       done();
       res.send(400);
     } else {
-      console.log(' update connected to db ');
+      console.log('updated completed to false');
       connection.query("UPDATE task_table set completed = true WHERE user_id = " + id);
       done();
     }
