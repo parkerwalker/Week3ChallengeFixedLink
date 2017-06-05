@@ -8,7 +8,7 @@ h1 {
   font-family: courier;
 }
 
-#table {
+#tableDone, #tableNotDone {
   color: #555;
   font-size: 22px;
   padding: 0 !important;
@@ -17,7 +17,7 @@ h1 {
   border: 7px solid #dedede;
 }
 
-#table :hover {
+#tableDone, #tableNotDone :hover {
   background-color: #f0f0f0;
   -webkit-transition: all 0.2s;
   -moz-transition:    all 0.2s;
@@ -61,7 +61,7 @@ h1 {
     box-sizing: border-box;
   }
 
-.complete {
+.complete, .listItem2 {
   text-decoration: line-through;
   background-color: green;
 }

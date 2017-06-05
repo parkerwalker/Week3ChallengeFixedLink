@@ -14,6 +14,7 @@ var config = {
 };
 
 var pool = new pg.Pool(config);
+  var sendBackData = [];
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -55,9 +56,8 @@ app.get('/getTask', function(req, res){
       res.send(400);
 
     } else {
-
-      console.log('posted to db');
       var sendBackData = [];
+      console.log('posted to db');
       var tableData = connection.query("SELECT * FROM task_table ORDER BY user_id ASC")
       tableData.on('row', function(row){
         sendBackData.push(row);
@@ -99,12 +99,12 @@ app.post('/updateCompletion', function(req, res){
       done();
       res.send(400);
     } else {
-      console.log('updated completed to false');
+      console.log('updated completed ');
       connection.query("UPDATE task_table set completed = true WHERE user_id = " + id);
       done();
     }
   });//end connect
-  res.send('hell yeah');
+  res.send('cool');
 });//end post
 
 
